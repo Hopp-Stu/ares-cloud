@@ -1,0 +1,130 @@
+server:
+  servlet:
+    context-path: /ares
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 800
+      min-spare: 30
+spring:
+  profiles:
+    active: @profileActive@
+  application:
+    name: Ares-System
+  mvc:
+    static-path-pattern: /static/**
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  boot:
+    admin:
+      client:
+        url: http://localhost:8888
+        username: admin
+        password: admin
+        instance:
+          name: ${spring.application.name}
+          service-base-url: http://localhost:${server.port}
+        monitor:
+          period: 100000
+          status-lifetime: 100000
+          connect-timeout: 100000
+          read-timeout: 100000
+mybatis:
+  mapper-locations: classpath*:mapping/**/*.xml
+  type-aliases-package: com.ares.**.**.model
+  config-location: classpath:mybatis-config.xml
+
+#分页配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+#日志配置
+logging:
+  config: classpath:logback-spring.xml
+  file:
+    name: logs/${spring.application.name}.log
+path:
+  log: logs
+
+management:
+  health:
+    neo4j:
+      enabled: false
+    rabbit:
+      enabled: false
+  endpoint:
+    health:
+      show-details: always
+    logfile:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+info:
+  project-name: ${spring.application.name}
+  project-groupId: '@project.parent.groupId@'
+  project-author: yy
+  project-description: ${spring.application.name} project
+  project-sourceEncoding: '@project.build.sourceEncoding@'
+  project-version: '@project.version@'
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8880/eureka/
+
+feign:
+  hystrix:
+    enabled: true
+
+
+ares:
+  base:
+    name: ARES
+    version: 1.0.0
+    copyright: 2020-2020@${ares.base.name}-${ares.base.version}
+    #全局session时间
+    timeout: 3600
+  #代码生成配置
+  codegenerator:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springbootv1?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
+    username: root
+    password: root
+    databaseName: springbootv1
+    tableName: test_v
+    tablePrefix:
+    genenaterLevel: 1
+    basePackage: com.ares.system.model
+    daoPackage: com.ares.system.dao
+    xmlDir: .src.main.resources.mapping
+    servicePackage: com.ares.system.service
+    controllerPackage: com.ares.system.controller
+  #swagger配置
+  swagger:
+    enable: true
+    base:
+      package: com.ares
+    contact:
+      email: 111@111.com
+      name: jjj
+      url: dasda
+    description: ${ares.base.name} API 接口文档
+    title: ${ares.base.name} API Documents
+    url: adas
+    version: V1.0.0
+    parameter-config:
+      - name: Authorization
+        description: Token Request Header
+        type: header
+        data-type: String
+        required: false
+        default-value:

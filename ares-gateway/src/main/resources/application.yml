@@ -1,0 +1,73 @@
+server:
+  port: 8881
+
+spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:8888
+        username: admin
+        password: admin
+        instance:
+          name: ${spring.application.name}
+          service-base-url: http://localhost:${server.port}
+        monitor:
+          period: 100000
+          status-lifetime: 100000
+          connect-timeout: 100000
+          read-timeout: 100000
+  application:
+    name: Ares-GateWay
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: ares_demo1
+          uri: lb://ares-demo1
+          predicates:
+            - Path=/demo1/**
+        - id: ares_demo2
+          uri: lb://ares-demo2
+          predicates:
+            - Path=/demo2/**
+#      - id: ares_quartz
+#        uri: lb://ares-quartz
+#        predicates:
+#          - Path=/quartz/**
+#      - id: ares_cache
+#        uri: lb://ares-cache
+#        predicates:
+#          - Path=/cache/**
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8880/eureka/
+
+
+management:
+  endpoint:
+    health:
+      show-details: always
+    logfile:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+info:
+  project-name: ${spring.application.name}
+  project-groupId: '@project.parent.groupId@'
+  project-author: yy
+  project-description: ${spring.application.name} project
+  project-sourceEncoding: '@project.build.sourceEncoding@'
+  project-version: '@project.version@'
+
+
+
