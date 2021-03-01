@@ -2,7 +2,7 @@ package com.ares.system.controller;
 
 import com.ares.core.controller.BaseController;
 import com.ares.core.model.system.SysDictData;
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.core.model.page.TableDataInfo;
 import com.ares.core.utils.StringUtils;
 import com.ares.system.common.security.SecurityUtils;
@@ -39,7 +39,7 @@ public class SysDictDataApiController extends BaseController {
     @GetMapping("{sysDictDataId}")
     @ApiOperation(value = "根据Id获取字典数据", response = Object.class)
     public Object getInfo(@PathVariable String sysDictDataId) {
-        return BaseResult.successData(sysDictDataService.getById(sysDictDataId));
+        return AjaxResult.successData(sysDictDataService.getById(sysDictDataId));
     }
 
     @PreAuthorize("hasAnyAuthority('sysDictData:edit')")
@@ -53,7 +53,7 @@ public class SysDictDataApiController extends BaseController {
             sysDictData.setModifier(SecurityUtils.getUser().getId());
             sysDictDataService.update(sysDictData);
         }
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     @PreAuthorize("hasAnyAuthority('sysDictData:delete')")
@@ -61,12 +61,12 @@ public class SysDictDataApiController extends BaseController {
     @ApiOperation(value = "删除字典数据", response = Object.class)
     public Object remove(@PathVariable String[] sysDictDataIds) {
         sysDictDataService.deleteByIds(Arrays.asList(sysDictDataIds));
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     @GetMapping("dictType/{dictType}")
     @ApiOperation(value = "根据类别获取字典数据", response = Object.class)
     public Object getDicts(@PathVariable String dictType) {
-        return BaseResult.successData(sysDictDataService.getDicts(dictType));
+        return AjaxResult.successData(sysDictDataService.getDicts(dictType));
     }
 }

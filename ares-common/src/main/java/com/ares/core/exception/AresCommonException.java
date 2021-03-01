@@ -1,4 +1,4 @@
-package com.ares.core.common.exception;
+package com.ares.core.exception;
 
 import com.ares.core.model.base.ResultCode;
 import lombok.Data;

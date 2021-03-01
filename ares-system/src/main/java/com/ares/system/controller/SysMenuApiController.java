@@ -2,7 +2,7 @@ package com.ares.system.controller;
 
 
 import com.ares.core.model.system.SysMenu;
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.core.utils.StringUtils;
 import com.ares.system.common.security.SecurityUtils;
 import com.ares.system.service.SysMenuService;
@@ -32,13 +32,13 @@ public class SysMenuApiController {
     public Object list(SysMenu menu) throws Exception {
         String userId = SecurityUtils.getUser().getId();
         List<SysMenu> menuList = menuService.selectMenuList(menu, userId);
-        return BaseResult.successData(menuList);
+        return AjaxResult.successData(menuList);
     }
 
     @GetMapping(value = "{menuId}")
     @ApiOperation(value = "根据菜单Id获取菜单", response = Object.class)
     public Object getInfo(@PathVariable String menuId) {
-        return BaseResult.successData(menuService.getById(menuId));
+        return AjaxResult.successData(menuService.getById(menuId));
     }
 
     /**
@@ -49,7 +49,7 @@ public class SysMenuApiController {
     public Object treeselect(SysMenu menu) throws Exception {
         String userId = SecurityUtils.getUser().getId();
         List<SysMenu> menus = menuService.selectMenuList(menu, userId);
-        return BaseResult.successData(menuService.buildMenuTreeSelect(menus));
+        return AjaxResult.successData(menuService.buildMenuTreeSelect(menus));
     }
 
     @PreAuthorize("hasAnyAuthority('menu:edit')")
@@ -63,7 +63,7 @@ public class SysMenuApiController {
             menu.setModifier(SecurityUtils.getUser().getId());
             menuService.update(menu);
         }
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     @PreAuthorize("hasAnyAuthority('menu:delete')")
@@ -71,10 +71,10 @@ public class SysMenuApiController {
     @ApiOperation(value = "删除菜单", response = Object.class)
     public Object remove(@PathVariable String menuId) {
         if (menuService.hasChildByMenuId(menuId)) {
-            return BaseResult.error("存在子菜单,不允许删除");
+            return AjaxResult.error("存在子菜单,不允许删除");
         }
         menuService.remove(menuId);
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     @GetMapping(value = "roleMenuTreeselect/{roleId}")
@@ -82,7 +82,7 @@ public class SysMenuApiController {
     public Object roleMenuTreeselect(@PathVariable("roleId") String roleId) throws Exception {
         String userId = SecurityUtils.getUser().getId();
         List<SysMenu> menus = menuService.selectMenuList(new SysMenu(), userId);
-        BaseResult result = BaseResult.success();
+        AjaxResult result = AjaxResult.success();
         result.put("checkedKeys", menuService.selectMenuByRole(roleId));
         result.put("menus", menuService.buildMenuTreeSelect(menus));
         return result;

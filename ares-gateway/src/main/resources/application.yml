@@ -25,29 +25,18 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        - id: ares_demo1
-          uri: lb://ares-demo1
+        - id: ares_system
+          uri: lb://Ares-System
           predicates:
-            - Path=/demo1/**
-        - id: ares_demo2
-          uri: lb://ares-demo2
+            - Path=/ares/**
+        - id: ares_cache
+          uri: lb://Ares-Cache
           predicates:
-            - Path=/demo2/**
-#      - id: ares_quartz
-#        uri: lb://ares-quartz
-#        predicates:
-#          - Path=/quartz/**
-#      - id: ares_cache
-#        uri: lb://ares-cache
-#        predicates:
-#          - Path=/cache/**
-
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8880/eureka/
-
+            - Path=/cache/**
+        - id: ares_quartz
+          uri: lb://Ares-Quartz
+          predicates:
+            - Path=/quartz/**
 
 management:
   endpoint:
@@ -63,11 +52,15 @@ management:
 
 info:
   project-name: ${spring.application.name}
-  project-groupId: '@project.parent.groupId@'
   project-author: yy
   project-description: ${spring.application.name} project
-  project-sourceEncoding: '@project.build.sourceEncoding@'
-  project-version: '@project.version@'
 
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8880/eureka/
 
+logging:
+  level:
+    org.springframework.cloud.gateway: debug

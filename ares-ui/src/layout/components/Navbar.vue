@@ -10,10 +10,14 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
-      <template v-if="device!=='mobile'">
+      <template v-if="device !== 'mobile'">
         <search id="header-search" class="right-menu-item" />
 
-        <el-badge class="right-menu-item" v-if="notice_num > 0" :value="notice_num" :max="99">
+        <el-badge
+          class="right-menu-item"
+          :value="notice_num > 0 ? notice_num : ''"
+          :max="99"
+        >
           <router-link to="/notify/message">
             <i class="el-icon-bell bell-style" />
           </router-link>
@@ -26,7 +30,10 @@
         </el-tooltip>
       </template>
 
-      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+      <el-dropdown
+        class="avatar-container right-menu-item hover-effect"
+        trigger="click"
+      >
         <div class="avatar-wrapper">
           <img :src="avatar" class="user-avatar" />
           <i class="el-icon-caret-bottom" />
@@ -54,8 +61,7 @@ import Hamburger from "@/components/Hamburger";
 import Screenfull from "@/components/Screenfull";
 import SizeSelect from "@/components/SizeSelect";
 import Search from "@/components/HeaderSearch";
-import RuoYiGit from "@/components/RuoYi/Git";
-import RuoYiDoc from "@/components/RuoYi/Doc";
+import store from "@/store";
 
 export default {
   components: {
@@ -64,8 +70,14 @@ export default {
     Screenfull,
     SizeSelect,
     Search,
-    RuoYiGit,
-    RuoYiDoc,
+  },
+  created() {
+    setInterval(() => {
+      store.dispatch("GetNoticeNumber");
+    }, 60 * 1000);
+  },
+  destroyed() {
+    clearInterval();
   },
   computed: {
     ...mapGetters(["sidebar", "avatar", "device", "notice_num"]),
@@ -183,6 +195,8 @@ export default {
 
     .bell-style {
       font-weight: bold;
+      font-size: larger;
+      padding-top: 15px;
     }
   }
 }

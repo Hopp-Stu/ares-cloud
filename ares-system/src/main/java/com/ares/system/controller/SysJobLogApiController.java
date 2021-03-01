@@ -2,7 +2,7 @@ package com.ares.system.controller;
 
 
 import com.ares.core.controller.BaseController;
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.core.model.page.TableDataInfo;
 import com.ares.core.model.system.SysQuartzJobLog;
 import com.ares.system.client.QuartzClient;
@@ -38,7 +38,7 @@ public class SysJobLogApiController extends BaseController {
     @GetMapping(value = "{jobLogId}")
     @ApiOperation(value = "根据调度编号获取详细信息", response = Object.class)
     public Object getInfo(@PathVariable String jobLogId) {
-        return BaseResult.successData(quartzClient.getInfo(jobLogId));
+        return AjaxResult.successData(quartzClient.getInfo(jobLogId));
     }
 
     /**
@@ -48,13 +48,13 @@ public class SysJobLogApiController extends BaseController {
     @DeleteMapping("{jobLogIds}")
     @ApiOperation(value = "删除定时任务调度日志", response = Object.class)
     public Object remove(@PathVariable String[] jobLogIds) {
-        return BaseResult.successData(quartzClient.remove(jobLogIds));
+        return AjaxResult.successData(quartzClient.remove(jobLogIds));
     }
 
     @PreAuthorize("hasAnyAuthority('quartz:logDelete')")
     @DeleteMapping("clean")
     @ApiOperation(value = "清空定时任务调度日志", response = Object.class)
     public Object clean() {
-        return BaseResult.successData(quartzClient.clean());
+        return AjaxResult.successData(quartzClient.clean());
     }
 }

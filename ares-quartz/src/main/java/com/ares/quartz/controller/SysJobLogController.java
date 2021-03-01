@@ -2,7 +2,7 @@ package com.ares.quartz.controller;
 
 
 import com.ares.core.controller.BaseController;
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.core.model.page.TableDataInfo;
 import com.ares.core.model.system.SysQuartzJobLog;
 import com.ares.quartz.service.SysQuartzJobLogService;
@@ -40,7 +40,7 @@ public class SysJobLogController extends BaseController {
     @GetMapping(value = "{jobLogId}")
     @ApiOperation(value = "根据调度编号获取详细信息", response = Object.class)
     public Object getInfo(@PathVariable String jobLogId) {
-        return BaseResult.successData(jobLogService.getById(jobLogId));
+        return AjaxResult.successData(jobLogService.getById(jobLogId));
     }
 
 
@@ -51,13 +51,13 @@ public class SysJobLogController extends BaseController {
     @ApiOperation(value = "删除定时任务调度日志", response = Object.class)
     public Object remove(@PathVariable String[] jobLogIds) {
         jobLogService.deleteByIds(Arrays.asList(jobLogIds));
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     @DeleteMapping("clean")
     @ApiOperation(value = "清空定时任务调度日志", response = Object.class)
     public Object clean() {
         jobLogService.cleanJobLog();
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 }

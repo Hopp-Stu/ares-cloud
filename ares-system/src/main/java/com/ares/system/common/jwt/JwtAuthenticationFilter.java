@@ -1,8 +1,8 @@
 package com.ares.system.common.jwt;
 
-import com.alibaba.fastjson.JSON;
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.system.common.security.SecurityUtils;
+import com.ares.system.utils.AresCommonUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -31,11 +31,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             SecurityUtils.checkAuthentication(request);
             chain.doFilter(request, response);
         } catch (Exception e) {
-            e.printStackTrace();
-            response.setStatus(200);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("utf-8");
-            response.getWriter().print(JSON.toJSONString(BaseResult.unLogin()));
+            AresCommonUtils.writeResponse(response, AjaxResult.unLogin());
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.ares.system.common.security;
 
-import com.ares.core.common.exception.UserException;
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.exception.UserException;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.core.model.base.Constants;
 import com.ares.core.model.system.SysUser;
 import com.ares.core.utils.SpringUtils;
@@ -76,7 +76,7 @@ public class SecurityUtils {
             if (JwtTokenUtils.isTokenExpired(token)) {
                 throw new UserException("登录过期！");
             }
-            BaseResult hasKey = redisClient.hasKey(Constants.LOGIN_INFO + userName);
+            AjaxResult hasKey = redisClient.hasKey(Constants.LOGIN_INFO + userName);
             if (Boolean.parseBoolean(String.valueOf(hasKey.get("data")))) {
                 // 设置登录认证信息到上下文
                 SecurityContextHolder.getContext().setAuthentication(authentication);

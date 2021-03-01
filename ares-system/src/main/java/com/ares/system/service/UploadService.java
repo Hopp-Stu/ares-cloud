@@ -1,6 +1,6 @@
 package com.ares.system.service;
 
-import com.ares.core.common.exception.AresCommonException;
+import com.ares.core.exception.AresCommonException;
 import com.ares.core.utils.DateUtils;
 import com.ares.core.utils.MimeTypeUtils;
 import com.ares.core.utils.StringUtils;

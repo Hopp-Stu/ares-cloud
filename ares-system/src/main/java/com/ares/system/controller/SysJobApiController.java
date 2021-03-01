@@ -2,7 +2,7 @@ package com.ares.system.controller;
 
 
 import com.ares.core.controller.BaseController;
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.core.model.page.TableDataInfo;
 import com.ares.core.model.system.SysQuartzJob;
 import com.ares.system.client.QuartzClient;
@@ -36,27 +36,27 @@ public class SysJobApiController extends BaseController {
     @GetMapping("{jobId}")
     @ApiOperation(value = "根据任务Id获取任务", response = Object.class)
     public Object getInfo(@PathVariable String jobId) {
-        return BaseResult.successData(quartzClient.getJobInfo(jobId));
+        return AjaxResult.successData(quartzClient.getJobInfo(jobId));
     }
 
     @PreAuthorize("hasAnyAuthority('quartz:edit')")
     @PostMapping("edit")
     @ApiOperation(value = "新增/修改任务", response = Object.class)
     public Object edit(@Validated @RequestBody SysQuartzJob job) {
-        return BaseResult.successData(quartzClient.edit(job));
+        return AjaxResult.successData(quartzClient.edit(job));
     }
 
     @PreAuthorize("hasAnyAuthority('quartz:delete')")
     @DeleteMapping("{jobIds}")
     @ApiOperation(value = "删除任务", response = Object.class)
     public Object remove(@PathVariable String[] jobIds) {
-        return BaseResult.successData(quartzClient.removeJob(jobIds));
+        return AjaxResult.successData(quartzClient.removeJob(jobIds));
     }
 
     @PutMapping("changeStatus")
     @ApiOperation(value = "启停任务", response = Object.class)
     public Object changeStatus(@RequestBody SysQuartzJob job) {
-        return BaseResult.successData(quartzClient.changeStatus(job));
+        return AjaxResult.successData(quartzClient.changeStatus(job));
     }
 
     /**
@@ -65,6 +65,6 @@ public class SysJobApiController extends BaseController {
     @PutMapping("run")
     @ApiOperation(value = "执行任务", response = Object.class)
     public Object run(@RequestBody SysQuartzJob job) {
-        return BaseResult.successData(quartzClient.run(job));
+        return AjaxResult.successData(quartzClient.run(job));
     }
 }

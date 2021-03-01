@@ -3,7 +3,7 @@ package com.ares.system.controller;
 
 import com.ares.core.controller.BaseController;
 import com.ares.core.model.system.SysProperties;
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.core.model.page.TableDataInfo;
 import com.ares.core.utils.StringUtils;
 import com.ares.system.common.security.SecurityUtils;
@@ -40,7 +40,7 @@ public class SysPropertiesApiController extends BaseController {
     @GetMapping("{sysPropertiesId}")
     @ApiOperation(value = "根据参数Id获取系统参数",response = Object.class)
     public Object getInfo(@PathVariable String sysPropertiesId) {
-        return BaseResult.successData(sysPropertiesService.getById(sysPropertiesId));
+        return AjaxResult.successData(sysPropertiesService.getById(sysPropertiesId));
     }
 
     @PreAuthorize("hasAnyAuthority('sysProperties:edit')")
@@ -54,7 +54,7 @@ public class SysPropertiesApiController extends BaseController {
             sysProperties.setModifier(SecurityUtils.getUser().getId());
             sysPropertiesService.update(sysProperties);
         }
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     @PreAuthorize("hasAnyAuthority('sysProperties:delete')")
@@ -62,6 +62,6 @@ public class SysPropertiesApiController extends BaseController {
     @ApiOperation(value = "删除系统参数",response = Object.class)
     public Object remove(@PathVariable String[] sysPropertiesIds) {
         sysPropertiesService.deleteByIds(Arrays.asList(sysPropertiesIds));
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 }

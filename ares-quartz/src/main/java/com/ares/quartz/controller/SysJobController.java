@@ -2,7 +2,7 @@ package com.ares.quartz.controller;
 
 
 import com.ares.core.controller.BaseController;
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.core.model.page.TableDataInfo;
 import com.ares.core.utils.StringUtils;
 import com.ares.core.model.system.SysQuartzJob;
@@ -40,7 +40,7 @@ public class SysJobController extends BaseController {
     @GetMapping("{jobId}")
     @ApiOperation(value = "根据任务Id获取任务", response = Object.class)
     public Object getInfo(@PathVariable String jobId) {
-        return BaseResult.successData(jobService.getById(jobId));
+        return AjaxResult.successData(jobService.getById(jobId));
     }
 
     @PostMapping("edit")
@@ -48,7 +48,7 @@ public class SysJobController extends BaseController {
     public Object edit(@Validated @RequestBody SysQuartzJob job) throws Exception {
         if (StringUtils.isEmpty(job.getId())) {
             if (jobService.checkUnique(job.getJobName()) != 0) {
-                return BaseResult.error("新增任务'" + job.getJobName() + "'失败，任务名称已存在");
+                return AjaxResult.error("新增任务'" + job.getJobName() + "'失败，任务名称已存在");
             }
             job.setCreator(job.getUserId());
             jobService.insert(job);
@@ -56,14 +56,14 @@ public class SysJobController extends BaseController {
             job.setModifier(job.getUserId());
             jobService.update(job);
         }
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     @DeleteMapping("{jobIds}")
     @ApiOperation(value = "删除任务", response = Object.class)
     public Object remove(@PathVariable String[] jobIds) {
         jobService.deleteByIds(Arrays.asList(jobIds));
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     @PutMapping("changeStatus")
@@ -73,7 +73,7 @@ public class SysJobController extends BaseController {
         newJob.setStatus(job.getStatus());
         newJob.setModifier(job.getUserId());
         jobService.changeStatus(newJob);
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     /**
@@ -84,6 +84,6 @@ public class SysJobController extends BaseController {
     public Object run(@RequestBody SysQuartzJob job) throws SchedulerException {
         SysQuartzJob newJob = jobService.getById(job.getId());
         jobService.run(newJob);
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 }

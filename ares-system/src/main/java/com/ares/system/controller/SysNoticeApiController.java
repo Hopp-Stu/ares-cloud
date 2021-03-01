@@ -2,7 +2,7 @@ package com.ares.system.controller;
 
 import com.ares.core.controller.BaseController;
 import com.ares.core.model.system.SysNotice;
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.core.model.page.TableDataInfo;
 import com.ares.core.utils.StringUtils;
 import com.ares.system.common.security.SecurityUtils;
@@ -39,7 +39,7 @@ public class SysNoticeApiController extends BaseController {
     @GetMapping("{noticeId}")
     @ApiOperation(value = "根据Id获取通知公告", response = Object.class)
     public Object getInfo(@PathVariable String noticeId) {
-        return BaseResult.successData(sysNoticeService.getById(noticeId));
+        return AjaxResult.successData(sysNoticeService.getById(noticeId));
     }
 
     @PreAuthorize("hasAnyAuthority('notice:edit')")
@@ -53,7 +53,7 @@ public class SysNoticeApiController extends BaseController {
             sysNotice.setModifier(SecurityUtils.getUser().getId());
             sysNoticeService.update(sysNotice);
         }
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     @PreAuthorize("hasAnyAuthority('notice:delete')")
@@ -61,18 +61,18 @@ public class SysNoticeApiController extends BaseController {
     @ApiOperation(value = "删除通知公告", response = Object.class)
     public Object remove(@PathVariable String[] noticeIds) {
         sysNoticeService.deleteByIds(Arrays.asList(noticeIds));
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     @GetMapping("noticeNum")
     @ApiOperation(value = "获取通知公告数量", response = Object.class)
     public Object noticeNum(){
-        return BaseResult.successData(sysNoticeService.noticeNum());
+        return AjaxResult.successData(sysNoticeService.noticeNum());
     }
 
     @GetMapping("getNotices")
     @ApiOperation(value = "通知公告时间线", response = Object.class)
     public Object getNotices(){
-        return BaseResult.successData(sysNoticeService.getNotices());
+        return AjaxResult.successData(sysNoticeService.getNotices());
     }
 }

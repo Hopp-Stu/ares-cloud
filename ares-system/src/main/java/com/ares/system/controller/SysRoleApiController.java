@@ -4,7 +4,7 @@ package com.ares.system.controller;
 import com.ares.core.controller.BaseController;
 import com.ares.core.model.system.SysRole;
 import com.ares.core.model.system.SysUser;
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.core.model.page.TableDataInfo;
 import com.ares.core.utils.StringUtils;
 import com.ares.system.common.security.SecurityUtils;
@@ -45,7 +45,7 @@ public class SysRoleApiController extends BaseController {
     @GetMapping("{roleId}")
     @ApiOperation(value = "根据角色Id获取用户", response = Object.class)
     public Object getInfo(@PathVariable String roleId) {
-        return BaseResult.successData(roleService.getById(roleId));
+        return AjaxResult.successData(roleService.getById(roleId));
     }
 
     @PreAuthorize("hasAnyAuthority('role:edit')")
@@ -55,7 +55,7 @@ public class SysRoleApiController extends BaseController {
         String roleId = "";
         if (StringUtils.isEmpty(role.getId())) {
             if (roleService.checkRoleName(role.getRoleName())) {
-                return BaseResult.error("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
+                return AjaxResult.error("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
             }
             role.setCreator(SecurityUtils.getUser().getId());
             roleId = roleService.insertRole(role);
@@ -65,7 +65,7 @@ public class SysRoleApiController extends BaseController {
             roleService.updateRole(role);
         }
 
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     @PreAuthorize("hasAnyAuthority('role:delete')")
@@ -73,26 +73,26 @@ public class SysRoleApiController extends BaseController {
     @ApiOperation(value = "删除用户", response = Object.class)
     public Object remove(@PathVariable String[] roleIds) {
         roleService.deleteByIds(Arrays.asList(roleIds));
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     @PutMapping("dataScope")
     @ApiOperation(value = "角色权限分配", response = Object.class)
     public Object dataScope(@RequestBody SysRole role) {
         roleService.authDataScope(role);
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     @GetMapping("optionselect")
     @ApiOperation(value = "角色下拉选项", response = Object.class)
     public Object optionselect() {
-        return BaseResult.successData(roleService.getAll());
+        return AjaxResult.successData(roleService.getAll());
     }
 
     @GetMapping("roleUserselect/{roleId}")
     @ApiOperation(value = "根据角色Id获取用户", response = Object.class)
     public Object roleUserselect(@PathVariable String roleId) {
-        BaseResult result = BaseResult.success();
+        AjaxResult result = AjaxResult.success();
         result.put("allUser", userService.selectUserList(new SysUser()));
         result.put("checkedKeys", userService.getUserByRole(roleId));
         return result;

@@ -31,7 +31,6 @@ router.beforeEach((to, from, next) => {
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
           })
         }).catch(err => {
-          debugger
           console.log(err)
           // 在request中已经判断用户是否登录，拉取用户信息失败一般是没有登录，所以在此可以不用一下操作
           // store.dispatch('FedLogOut').then(() => {

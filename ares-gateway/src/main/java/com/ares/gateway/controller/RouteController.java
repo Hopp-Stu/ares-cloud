@@ -11,6 +11,7 @@ import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
@@ -73,6 +74,11 @@ public class RouteController {
     public String update(@RequestBody GatewayRouteDefinition gwdefinition) {
         RouteDefinition definition = assembleRouteDefinition(gwdefinition);
         return this.dynamicRouteService.updateRoute(definition);
+    }
+
+    @GetMapping("getRoutes")
+    public Flux<RouteDefinition> getRouteDefinitions() {
+        return dynamicRouteService.getRouteDefinitions();
     }
 
     /**

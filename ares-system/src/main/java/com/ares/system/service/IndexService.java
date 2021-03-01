@@ -1,7 +1,7 @@
 package com.ares.system.service;
 
 import com.ares.system.client.RedisClient;
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.core.model.base.Constants;
 
 import com.ares.system.dao.IIndexDao;
@@ -130,7 +130,7 @@ public class IndexService {
 
     private int getOnlinePeople() {
         String pattern = Constants.LOGIN_INFO + "*";
-        BaseResult result = redisClient.getKeysByPattern(pattern);
+        AjaxResult result = redisClient.getKeysByPattern(pattern);
         List<String> keys = (List<String>) result.get("data");
         return keys.size();
     }

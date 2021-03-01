@@ -73,7 +73,6 @@ info:
   project-groupId: '@project.parent.groupId@'
   project-author: yy
   project-description: ${spring.application.name} project
-  project-sourceEncoding: '@project.build.sourceEncoding@'
   project-version: '@project.version@'
 
 eureka:

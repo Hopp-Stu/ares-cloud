@@ -1,7 +1,7 @@
 package com.ares.system.utils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -34,7 +34,7 @@ public class HttpUtils {
      */
     public static void write(HttpServletResponse response, Object data) throws IOException {
         response.setContentType("application/json; charset=utf-8");
-        BaseResult result = BaseResult.successData(data);
+        AjaxResult result = AjaxResult.successData(data);
         String json = JSONObject.toJSONString(result);
         response.getWriter().print(json);
         response.getWriter().flush();

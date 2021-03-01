@@ -1,6 +1,6 @@
 package com.ares.system.controller;
 
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.system.service.IndexService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +27,11 @@ public class IndexApiController {
 
     @GetMapping("panelGroup")
     public Object getPanelGroup(){
-        return BaseResult.successData(indexService.getPanelGroup());
+        return AjaxResult.successData(indexService.getPanelGroup());
     }
 
     @GetMapping("lineChartData")
     public Object getLineChartData(){
-        return BaseResult.successData(indexService.getLineChartData());
+        return AjaxResult.successData(indexService.getLineChartData());
     }
 }

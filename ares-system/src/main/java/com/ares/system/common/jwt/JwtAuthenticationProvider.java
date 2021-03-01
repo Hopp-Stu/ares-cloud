@@ -1,6 +1,8 @@
 package com.ares.system.common.jwt;
 
 
+import com.ares.core.utils.MD5Util;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -31,6 +33,13 @@ public class JwtAuthenticationProvider extends DaoAuthenticationProvider {
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication)
             throws AuthenticationException {
         // 可以在此处覆写密码验证逻辑
-        super.additionalAuthenticationChecks(userDetails, authentication);
+        String password = userDetails.getPassword();
+        String pwd = authentication.getCredentials().toString();
+
+        if (null != userDetails) {
+            if (!password.equals(MD5Util.encode(pwd))) {
+                throw new BadCredentialsException("用户名密码错误");
+            }
+        }
     }
 }

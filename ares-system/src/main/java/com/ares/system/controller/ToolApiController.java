@@ -1,7 +1,7 @@
 package com.ares.system.controller;
 
 
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.core.model.server.Server;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,12 +36,18 @@ public class ToolApiController {
     public Object server() throws Exception {
         Server server = new Server();
         server.copyTo();
-        return BaseResult.successData(server);
+        return AjaxResult.successData(server);
     }
 
     @RequestMapping("tool/swagger/index")
     @ApiOperation(value = "swagger接口",response = String.class)
     public String swagger() {
         return "redirect:/swagger-ui.html";
+    }
+
+    @RequestMapping("tool/knife4j/index")
+    @ApiOperation(value = "knife4j接口",response = String.class)
+    public String knife4j() {
+        return "redirect:/doc.html";
     }
 }

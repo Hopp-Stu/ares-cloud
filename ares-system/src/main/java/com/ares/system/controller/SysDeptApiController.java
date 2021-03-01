@@ -2,7 +2,7 @@ package com.ares.system.controller;
 
 import com.ares.core.controller.BaseController;
 import com.ares.core.model.system.SysDept;
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.core.model.page.TableDataInfo;
 import com.ares.core.utils.StringUtils;
 import com.ares.system.common.security.SecurityUtils;
@@ -40,7 +40,7 @@ public class SysDeptApiController extends BaseController {
     @GetMapping("{sysDeptId}")
     @ApiOperation(value = "根据Id获取部门信息", response = Object.class)
     public Object getInfo(@PathVariable String sysDeptId) {
-        return BaseResult.successData(sysDeptService.getByDeptId(sysDeptId));
+        return AjaxResult.successData(sysDeptService.getByDeptId(sysDeptId));
     }
 
     //@PreAuthorize("hasAnyAuthority('sysDept:edit')")
@@ -54,7 +54,7 @@ public class SysDeptApiController extends BaseController {
             sysDept.setModifier(SecurityUtils.getUser().getId());
             sysDeptService.update(sysDept);
         }
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     //@PreAuthorize("hasAnyAuthority('sysDept:delete')")
@@ -62,12 +62,12 @@ public class SysDeptApiController extends BaseController {
     @ApiOperation(value = "删除部门", response = Object.class)
     public Object remove(@PathVariable String[] sysDeptIds) {
         sysDeptService.deleteByIds(Arrays.asList(sysDeptIds));
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     @RequestMapping("treeselect")
     @ApiOperation(value = "部门树列表", response = Object.class)
     public Object tree(HttpServletRequest request, HttpServletResponse response) {
-        return BaseResult.successData(sysDeptService.buildDeptTree());
+        return AjaxResult.successData(sysDeptService.buildDeptTree());
     }
 }

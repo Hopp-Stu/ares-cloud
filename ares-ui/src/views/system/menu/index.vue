@@ -21,8 +21,20 @@
         </el-select>
       </el-form-item>-->
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd">新增</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+          >新增</el-button
+        >
       </el-form-item>
     </el-form>
 
@@ -31,25 +43,50 @@
       :data="menuList"
       row-key="id"
       border
-      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     >
-      <el-table-column prop="name" label="菜单名称" :show-overflow-tooltip="true" width="160"></el-table-column>
+      <el-table-column
+        prop="name"
+        label="菜单名称"
+        :show-overflow-tooltip="true"
+        width="160"
+      ></el-table-column>
       <el-table-column prop="icon" label="图标" align="center" width="100">
         <template slot-scope="scope">
           <svg-icon :icon-class="scope.row.icon" />
         </template>
       </el-table-column>
-      <el-table-column prop="perms" label="权限标识" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="path" label="路由地址" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="url" label="组件路径" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="visible" label="是否可见" :formatter="visibleFormat"></el-table-column>
+      <el-table-column
+        prop="perms"
+        label="权限标识"
+        :show-overflow-tooltip="true"
+      ></el-table-column>
+      <el-table-column
+        prop="path"
+        label="路由地址"
+        :show-overflow-tooltip="true"
+      ></el-table-column>
+      <el-table-column
+        prop="url"
+        label="组件路径"
+        :show-overflow-tooltip="true"
+      ></el-table-column>
+      <el-table-column
+        prop="visible"
+        label="是否可见"
+        :formatter="visibleFormat"
+      ></el-table-column>
       <el-table-column prop="order" label="排序" width="60"></el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -57,21 +94,24 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['menu:edit']"
-          >修改</el-button>
+            >修改</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-plus"
             @click="handleAdd(scope.row)"
             v-hasPermi="['menu:edit']"
-          >新增</el-button>
+            >新增</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['menu:delete']"
-          >删除</el-button>
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -94,7 +134,12 @@
           <el-col :span="24">
             <el-form-item label="菜单类型" prop="type">
               <el-radio-group v-model="form.type">
-                <el-radio v-for="item in typeOptions" :label="item.id" :key="item.id">{{item.value}}</el-radio>
+                <el-radio
+                  v-for="item in typeOptions"
+                  :label="item.id"
+                  :key="item.id"
+                  >{{ item.value }}</el-radio
+                >
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -107,15 +152,24 @@
                 @show="$refs['iconSelect'].reset()"
               >
                 <IconSelect ref="iconSelect" @selected="selected" />
-                <el-input slot="reference" v-model="form.icon" placeholder="点击选择图标" readonly>
+                <el-input
+                  slot="reference"
+                  v-model="form.icon"
+                  placeholder="点击选择图标"
+                  readonly
+                >
                   <svg-icon
                     v-if="form.icon"
                     slot="prefix"
                     :icon-class="form.icon"
                     class="el-input__icon"
-                    style="height: 32px;width: 16px;"
+                    style="height: 32px; width: 16px"
                   />
-                  <i v-else slot="prefix" class="el-icon-search el-input__icon" />
+                  <i
+                    v-else
+                    slot="prefix"
+                    class="el-icon-search el-input__icon"
+                  />
                 </el-input>
               </el-popover>
             </el-form-item>
@@ -127,7 +181,11 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="显示排序" prop="order">
-              <el-input-number v-model="form.order" controls-position="right" :min="0" />
+              <el-input-number
+                v-model="form.order"
+                controls-position="right"
+                :min="0"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -142,7 +200,11 @@
           </el-col>
           <el-col :span="12">
             <el-form-item v-if="form.type != 0" label="权限标识">
-              <el-input v-model="form.perms" placeholder="请权限标识" maxlength="50" />
+              <el-input
+                v-model="form.perms"
+                placeholder="请权限标识"
+                maxlength="50"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -207,7 +269,7 @@ export default {
         visible: undefined,
       },
       typeOptions: [
-        { id: 0, value: "目录" },
+        // { id: 0, value: "目录" },
         { id: 1, value: "菜单" },
         { id: 2, value: "按钮" },
       ],

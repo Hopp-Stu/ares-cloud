@@ -1,5 +1,10 @@
 <template>
   <div class="app-container">
+    <el-card v-show="msgList.length == 0" shadow="always">
+      <el-alert title="没有新的公告信息" type="info" center show-icon>
+      </el-alert>
+    </el-card>
+
     <el-timeline>
       <el-timeline-item
         v-for="msg in msgList"
@@ -10,12 +15,14 @@
         :type="msg.noticeType == 1 ? 'primary' : 'warning'"
         placement="top"
       >
-        <el-card>
+        <el-card shadow="always">
           <div slot="header" class="clearfix">
-            <span>{{msg.noticeTitle}}</span>
-            <span style="float: right; padding: 3px 0">{{msg.creator}} - {{msg.createTime}}</span>
+            <span>{{ msg.noticeTitle }}</span>
+            <span style="float: right; padding: 3px 0"
+              >{{ msg.creator }} - {{ msg.createTime }}</span
+            >
           </div>
-          <p v-html="msg.noticeContent"></p>
+          <p v-html="msg.noticeContent" />
         </el-card>
       </el-timeline-item>
     </el-timeline>
@@ -24,6 +31,7 @@
 
 <script>
 import { getNotices } from "@/api/notify/message";
+import store from "@/store";
 
 export default {
   name: "Message",
@@ -34,6 +42,7 @@ export default {
   },
   created() {
     this.getList();
+    store.dispatch("GetNoticeNumber");
   },
   methods: {
     getList() {

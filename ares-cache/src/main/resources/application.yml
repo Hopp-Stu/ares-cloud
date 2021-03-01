@@ -39,8 +39,6 @@ logging:
   config: classpath:logback-spring.xml
   file:
     name: logs/${spring.application.name}.log
-path:
-  log: logs
 
 management:
   endpoint:
@@ -59,10 +57,13 @@ info:
   project-groupId: '@project.parent.groupId@'
   project-author: yy
   project-description: ${spring.application.name} project
-  project-sourceEncoding: '@project.build.sourceEncoding@'
   project-version: '@project.version@'
 
 eureka:
+  instance:
+    prefer-ip-address: true
   client:
     service-url:
       defaultZone: http://localhost:8880/eureka/
+    register-with-eureka: true
+    fetch-registry: true

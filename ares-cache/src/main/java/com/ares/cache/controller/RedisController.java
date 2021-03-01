@@ -1,7 +1,7 @@
 package com.ares.cache.controller;
 
 import com.ares.cache.service.RedisService;
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.core.model.cache.CacheBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +20,9 @@ public class RedisController {
     private RedisService redisService;
 
     @PostMapping("setCache")
-    public BaseResult set(@RequestBody CacheBody body) {
+    public AjaxResult set(@RequestBody CacheBody body) {
         redisService.set(body.getKey(), body.getValue(), body.getTime());
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     /**
@@ -32,9 +32,8 @@ public class RedisController {
      * @return
      */
     @GetMapping("getCache/{key}")
-    public BaseResult get(@PathVariable String key) {
-        redisService.get(key);
-        return BaseResult.success();
+    public AjaxResult get(@PathVariable String key) {
+        return AjaxResult.successData(redisService.get(key));
     }
 
     /**
@@ -43,9 +42,9 @@ public class RedisController {
      * @param keys
      */
     @DeleteMapping("delCache/{keys}")
-    public BaseResult del(@PathVariable String keys) {
+    public AjaxResult del(@PathVariable String keys) {
         redisService.del(keys);
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
 
@@ -56,8 +55,8 @@ public class RedisController {
      * @return
      */
     @GetMapping("hasKey/{key}")
-    public BaseResult hasKey(@PathVariable String key) {
-        return BaseResult.successData(redisService.hasKey(key));
+    public AjaxResult hasKey(@PathVariable String key) {
+        return AjaxResult.successData(redisService.hasKey(key));
     }
 
     /**
@@ -68,8 +67,8 @@ public class RedisController {
      * @return
      */
     @PostMapping("getHash/{key}/{hashKey}")
-    public BaseResult getHash(@PathVariable String key, @PathVariable String hashKey) {
-        return BaseResult.successData(redisService.getHash(key, hashKey));
+    public AjaxResult getHash(@PathVariable String key, @PathVariable String hashKey) {
+        return AjaxResult.successData(redisService.getHash(key, hashKey));
     }
 
     /**
@@ -78,8 +77,8 @@ public class RedisController {
      * @return
      */
     @PostMapping("setHash")
-    public BaseResult setHash(@RequestBody CacheBody body) {
-        return BaseResult.successData(redisService.setHash(body.getKey(), body.getHashKey(), body.getValue()));
+    public AjaxResult setHash(@RequestBody CacheBody body) {
+        return AjaxResult.successData(redisService.setHash(body.getKey(), body.getHashKey(), body.getValue()));
     }
 
     /**
@@ -88,23 +87,23 @@ public class RedisController {
      * @return
      */
     @PostMapping("delHash")
-    public BaseResult delHash(@RequestBody CacheBody body) {
-        return BaseResult.successData(redisService.delHash(body.getKey(), body.getHashKeys()));
+    public AjaxResult delHash(@RequestBody CacheBody body) {
+        return AjaxResult.successData(redisService.delHash(body.getKey(), body.getHashKeys()));
     }
 
     @PostMapping("hasHash")
-    public BaseResult hasHash(@RequestBody CacheBody body) {
-        return BaseResult.successData(redisService.hasHash(body.getKey(), body.getHashKey()));
+    public AjaxResult hasHash(@RequestBody CacheBody body) {
+        return AjaxResult.successData(redisService.hasHash(body.getKey(), body.getHashKey()));
     }
 
     @PostMapping("expire")
-    public BaseResult expire(@RequestBody CacheBody body) {
-        return BaseResult.successData(redisService.expire(body.getKey(), body.getTime()));
+    public AjaxResult expire(@RequestBody CacheBody body) {
+        return AjaxResult.successData(redisService.expire(body.getKey(), body.getTime()));
     }
 
     @GetMapping("getKeysByPattern/{pattern}")
-    public BaseResult getKeysByPattern(@PathVariable String pattern) {
-        return BaseResult.successData(redisService.getKeysByPattern(pattern));
+    public AjaxResult getKeysByPattern(@PathVariable String pattern) {
+        return AjaxResult.successData(redisService.getKeysByPattern(pattern));
     }
 
 }

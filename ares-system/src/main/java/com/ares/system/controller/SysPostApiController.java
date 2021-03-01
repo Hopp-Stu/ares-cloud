@@ -2,7 +2,7 @@ package com.ares.system.controller;
 
 import com.ares.core.controller.BaseController;
 import com.ares.core.model.system.SysPost;
-import com.ares.core.model.base.BaseResult;
+import com.ares.core.model.base.AjaxResult;
 import com.ares.core.model.page.TableDataInfo;
 import com.ares.core.utils.StringUtils;
 import com.ares.system.common.security.SecurityUtils;
@@ -39,7 +39,7 @@ public class SysPostApiController extends BaseController {
     @GetMapping("{sysPostId}")
     @ApiOperation(value = "根据Id获取岗位信息", response = Object.class)
     public Object getInfo(@PathVariable String sysPostId) {
-        return BaseResult.successData(sysPostService.getById(sysPostId));
+        return AjaxResult.successData(sysPostService.getById(sysPostId));
     }
 
     @PreAuthorize("hasAnyAuthority('sysPost:edit')")
@@ -53,7 +53,7 @@ public class SysPostApiController extends BaseController {
             sysPost.setModifier(SecurityUtils.getUser().getId());
             sysPostService.update(sysPost);
         }
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     @PreAuthorize("hasAnyAuthority('sysPost:delete')")
@@ -61,12 +61,12 @@ public class SysPostApiController extends BaseController {
     @ApiOperation(value = "删除岗位信息", response = Object.class)
     public Object remove(@PathVariable String[] sysPostIds) {
         sysPostService.deleteByIds(Arrays.asList(sysPostIds));
-        return BaseResult.success();
+        return AjaxResult.success();
     }
 
     @GetMapping("optionselect")
     @ApiOperation(value = "岗位下拉数据", response = Object.class)
     public Object optionselect() {
-        return BaseResult.successData(sysPostService.getAll());
+        return AjaxResult.successData(sysPostService.getAll());
     }
 }

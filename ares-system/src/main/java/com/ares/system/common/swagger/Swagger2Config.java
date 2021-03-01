@@ -1,10 +1,10 @@
 package com.ares.system.common.swagger;
 
-
-import com.ares.core.common.exception.AresCommonException;
 import com.ares.system.common.config.SwaggerProperties;
+import com.ares.core.exception.AresCommonException;
 import com.fasterxml.jackson.databind.introspect.AnnotatedField;
 import com.fasterxml.jackson.databind.introspect.BeanPropertyDefinition;
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
@@ -55,6 +55,7 @@ import static springfox.documentation.swagger.schema.ApiModelProperties.findApiM
  * @author: yy 2020/02/02
  **/
 @Slf4j
+@EnableKnife4j
 @Configuration
 @EnableSwagger2
 public class Swagger2Config {

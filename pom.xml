@@ -21,11 +21,10 @@
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons.version>2.6</commons.version>
         <jackson.version>2.11.3</jackson.version>
+        <knife4j.version>2.0.4</knife4j.version>
     </properties>
 
     <modules>
-        <module>ares-zdemo1</module>
-        <module>ares-zdemo2</module>
         <module>ares-eureka</module>
         <module>ares-gateway</module>
         <module>ares-common</module>
@@ -33,6 +32,7 @@
         <module>ares-system</module>
         <module>ares-cache</module>
         <module>ares-monitor</module>
+        <module>ares-authority</module>
     </modules>
 
     <dependencies>
@@ -91,6 +91,11 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
             <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>${knife4j.version}</version>
         </dependency>
     </dependencies>
 

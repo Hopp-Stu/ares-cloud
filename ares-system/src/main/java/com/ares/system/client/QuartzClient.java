@@ -16,17 +16,18 @@ import org.springframework.web.bind.annotation.*;
 @FeignClient(value = "Ares-Quartz")
 public interface QuartzClient {
 
+
     @RequestMapping(value = "/quartz/monitor/job/list")
     public TableDataInfo list(@RequestBody SysQuartzJob job);
 
     @RequestMapping(value = "/quartz/monitor/job/{jobId}", method = RequestMethod.GET)
-    public Object getJobInfo(@PathVariable String jobId);
+    public Object getJobInfo(@PathVariable("jobId") String jobId);
 
     @RequestMapping(value = "/quartz/monitor/job/edit", method = RequestMethod.POST)
     public Object edit(@Validated @RequestBody SysQuartzJob job);
 
     @RequestMapping(value = "/quartz/monitor/job/{jobIds}", method = RequestMethod.DELETE)
-    public Object removeJob(@PathVariable String[] jobIds);
+    public Object removeJob(@PathVariable("jobIds") String[] jobIds);
 
     @RequestMapping(value = "/quartz/monitor/job/changeStatus", method = RequestMethod.PUT)
     public Object changeStatus(@RequestBody SysQuartzJob job);
@@ -38,10 +39,10 @@ public interface QuartzClient {
     public TableDataInfo list(SysQuartzJobLog jobLog);
 
     @RequestMapping(value = "/quartz/monitor/jobLog/{jobLogId}", method = RequestMethod.GET)
-    public Object getInfo(@PathVariable String jobLogId);
+    public Object getInfo(@PathVariable("jobLogId") String jobLogId);
 
     @RequestMapping(value = "/quartz/monitor/jobLog/{jobLogIds}", method = RequestMethod.DELETE)
-    public Object remove(@PathVariable String[] jobLogIds);
+    public Object remove(@PathVariable("jobLogIds") String[] jobLogIds);
 
     @RequestMapping(value = "/quartz/monitor/jobLog/clean", method = RequestMethod.DELETE)
     public Object clean();

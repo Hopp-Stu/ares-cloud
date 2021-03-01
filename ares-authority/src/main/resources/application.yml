@@ -1,0 +1,39 @@
+server:
+  port: 8885
+
+spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:8888
+        username: admin
+        password: admin
+        instance:
+          name: ${spring.application.name}
+          service-base-url: http://localhost:${server.port}
+        monitor:
+          period: 100000
+          status-lifetime: 100000
+          connect-timeout: 100000
+          read-timeout: 100000
+  application:
+    name: Ares-Authority
+
+
+management:
+  endpoint:
+    health:
+      show-details: always
+    logfile:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+info:
+  project-name: ${spring.application.name}
+  project-author: yy
+  project-description: ${spring.application.name} project
+
